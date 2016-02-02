@@ -1,0 +1,22 @@
+---
+- hosts: baresmachine
+  sudo: yes
+  remote_user: apozo
+  tasks:
+  - name: Instalar paquetes necesarios
+    apt: name=python-setuptools state=present
+    apt: name=python-dev state=present
+    apt: name=build-essential state=present
+    apt: name=git state=present
+    apt: name=libtiff4-dev state=present
+    apt: name=libjpeg8-dev state=present
+    apt: name=zlib1g-dev state=present
+    apt: name=libfreetype6-dev state=present
+    apt: name=liblcms1-dev state=present
+    apt: name=libwebp-dev state=present
+  - name: Clonando repositorio desde git
+    git: repo=https://github.com/AntonioPozo/BaresDesarrollo.git dest=BaresDesarrolloPlay clone=yes force=yes
+  - name: Instalar requisitos para la app
+    shell: cd BaresDesarrolloPlay && make install
+  - name: Ejecutar aplicacion
+    shell: BaresWP && make run
